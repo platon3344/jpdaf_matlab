@@ -250,7 +250,7 @@ U=zeros(m1+1,c);
 for i=1:c
     for j=1:m1
         for k=1:num
-            U(j,i)=U(j,i)+Pr(k)*A_matrix(j,i+1,k);
+            U(j,i)=U(j,i)+Pr(k)*A_matrix(j,i+1,k);%利用后验概率pr计算每个关联矩阵的概率。
         end
     end
 end
