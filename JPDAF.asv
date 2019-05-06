@@ -192,11 +192,11 @@ for t=1:n
 %%%  4.产生互联矩阵A_matrix,其中num表示可行联合事件个数  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 A_matrix=zeros(m1,3,10000);
-A_matrix(:,1,1:10000)=1;%第一列都设置为1，表明每个目标都有可能来自杂波。
+A_matrix(:,1,1:10000)=1;
  if m1~=0                                                                       %m1=0表示两个目标都没有观测到，就是连两个目标和杂波都没有观测到。
        num=1;%矩阵个数，也就是事件个数
        for i=1:m1
-            if Q2(i,2)==1 %第一条航迹关联
+            if Q2(i,2)==1
                 A_matrix(i,2,num)=1;
                 A_matrix(i,1,num)=0;
                 num=num+1;
@@ -229,14 +229,13 @@ A_matrix=A_matrix(:,:,1:num);                                                  %
 %%%      mea_indicator表示观测指示器,是否每个量测值都被目标关联
 %%%      target_indicator表示目标指示器 ，是否每个目标都被检测到。
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%计算每个事件个数的概率
-Pr=zeros(1,num);%num为事件个数
-for i=1:num 
+Pr=zeros(1,num);
+for i=1:num
     False_num=m1;
     N=1;
-    for j=1:m1 %m1为杂波和目标总数
+    for j=1:m1
         mea_indicator=sum(A_matrix(j,2:3,i));                                      %参考文献中式4-48
-        if mea_indicator==1 %表示两个航迹中，有关联上的目标
+        if mea_indicator==1
             False_num=False_num-1;
             if A_matrix(j,2,i)==1                                                  %如果观测与目标1关联
                 b=(y(:,j)-Z_predic(:,1))'*inv(S(:,:,1))*(y(:,j)-Z_predic(:,1));
